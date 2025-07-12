@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice - {{kode_pemesanan}}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 20px;
+        }
+        
+        .logo {
+            font-size: 48px;
+            font-weight: bold;
+            color: #2196F3;
+            margin-right: 20px;
+            font-style: italic;
+        }
+        
+        .company-info {
+            flex: 1;
+        }
+        
+        .company-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .company-address {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .document-title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: #2196F3;
+            margin: 30px 0;
+            text-transform: uppercase;
+        }
+        
+        .document-info {
+            margin-bottom: 30px;
+        }
+        
+        .document-info p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        
+        .client-info {
+            margin-bottom: 30px;
+        }
+        
+        .client-info h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .client-details p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+        }
+        
+        .invoice-table th,
+        .invoice-table td {
+            border: 1px solid #333;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .invoice-table th {
+            background-color: #f5f5f5;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .invoice-table .text-center {
+            text-align: center;
+        }
+        
+        .invoice-table .text-right {
+            text-align: right;
+        }
+        
+        .total-row {
+            font-weight: bold;
+            background-color: #f9f9f9;
+        }
+        
+        .payment-info {
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-left: 4px solid #2196F3;
+        }
+        
+        .payment-info h3 {
+            margin-top: 0;
+            color: #2196F3;
+        }
+        
+        .signature-section {
+            margin-top: 60px;
+            text-align: right;
+        }
+        
+        .signature-name {
+            font-weight: bold;
+        }
+        
+        .signature-title {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        @media print {
+            body {
+                margin: 0;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">MKVi</div>
+        <div class="company-info">
+            <div class="company-name">MKVi | Myer Kreatif Vision Vibe</div>
+            <div class="company-address">
+                Perum Telaga Murni Blok E23 No. 25, RT 02 RW 08 Kelurahan Telaga Murni,<br>
+                Kec. Cikarang Barat, Kab. Bekasi, Jawa Barat 17530<br>
+                Email: myerkvi@gmail.com | Telp : 085283125585
+            </div>
+        </div>
+    </div>
+
+    <div class="document-title">Invoice</div>
+
+    <div class="document-info">
+        <p><strong>No. Invoice :</strong> INV/MKVi/{{tahun}}/{{nomor_urut}}</p>
+        <p><strong>Tanggal :</strong> {{tanggal_invoice}}</p>
+    </div>
+
+    <div class="client-info">
+        <h3>Kepada Yth:</h3>
+        <div class="client-details">
+            <p><strong>Nama:</strong> {{nama_client}}</p>
+            <p><strong>Perusahaan:</strong> {{perusahaan_client}}</p>
+            <p><strong>Alamat:</strong> {{alamat_client}}</p>
+        </div>
+    </div>
+
+    <table class="invoice-table">
+        <thead>
+            <tr>
+                <th>Layanan</th>
+                <th>Deskripsi</th>
+                <th>Jumlah</th>
+                <th>Harga Satuan</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each items}}
+            <tr>
+                <td>{{layanan}}</td>
+                <td>{{deskripsi}}</td>
+                <td class="text-center">{{jumlah}}</td>
+                <td class="text-right">{{harga_satuan_formatted}}</td>
+                <td class="text-right">{{total_formatted}}</td>
+            </tr>
+            {{/each}}
+            <tr class="total-row">
+                <td colspan="4" class="text-right"><strong>Total</strong></td>
+                <td class="text-right"><strong>{{grand_total_formatted}}</strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="payment-info">
+        <h3>Catatan Pembayaran:</h3>
+        <p>Pembayaran dapat dilakukan melalui:</p>
+        <p><strong>Bank BCA a.n. Myer Kreatif Vision Vibe – 1234567890</strong></p>
+        <p>Mohon konfirmasi pembayaran ke WA: <strong>08xxxxxxxxxx</strong></p>
+    </div>
+
+    <div class="signature-section">
+        <p><strong>Hormat kami,</strong></p>
+        <br><br><br>
+        <div class="signature-name">{{nama_penanggung_jawab}}</div>
+        <div class="signature-title">Myer Kreatif Vision Vibe</div>
+    </div>
+</body>
+</html>
